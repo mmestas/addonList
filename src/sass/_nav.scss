@@ -1,0 +1,10 @@
+nav { position: fixed; top:0;width:100%;background: #eeeeee4d;padding: 15px;
+  a {padding: 5px 10px;text-decoration: none;display: inline-block;background-color: transparent;border-radius: 4px; margin-right:10px;color:$appWhite;
+    &:visited, &:link {}
+    &:hover {color: darken($appWhite, 20%); background-color: transparent;}
+    &.active {color: darken($appWhite, 20%);}
+  }
+  .navbar-toggler-icon {
+    // background-image: url();
+  }
+}

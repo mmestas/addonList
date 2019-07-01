@@ -1,0 +1,124 @@
+<div class="container tierPage">
+  <!-- Keep for testing -->
+  <!-- <div style="max-height:200px; overflow: scroll;background:#fff; display:flex;">
+    <pre style="color:blue; font-size:10px; width:50%;">{{ nestableListContainer | json }}</pre>
+    <pre style="color:#555; font-size:10px; width:50%;">{{ addonList | json }}</pre>
+  </div> -->
+
+
+  <div class="" style="margin-bottom: 80px;">
+
+    <!-- ngx-drag-drop -->
+
+    <div class="row">
+      <ng-template #recursiveList let-list>
+        <div dndPlaceholderRef class="dndPlaceholder"></div>
+        <div *ngFor="let item of list"
+                  [dndDraggable]="item"
+                  dndEffectAllowed="move"
+                  [dndDisableIf]="item.disable"
+                  (dndStart)="onDragStart($event)"
+                  (dndCopied)="onDragged(item, list, 'copy')"
+                  (dndLinked)="onDragged(item, list, 'link')"
+                  (dndMoved)="onDragged(item, list, 'move')"
+                  (dndCanceled)="onDragged(item, list, 'none')"
+                  (dndEnd)="onDragEnd($event)"
+                  class="dragItem"
+        >
+          <div class="col col-md-12 p-0">
+            <div class="dragIconHolder">
+                <i class="fas fa-expand-arrows-alt" dndHandle></i>
+            </div>
+
+            <span *ngIf="!item.columns || item.columns.length <= 1">
+              <div class="wrapper">
+                <div class="container pt-3">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div [innerHTML]="item.renderedHtml | safeHtml"></div>
+                        <div *ngFor="let stylesheet of item.renderedAssets.headStylesheetLinks">
+                          <link rel="stylesheet" [attr.href]="'http://memberboss.com'+stylesheet | safeUrl">
+                        </div>
+                      <div *ngIf="!item.renderedHtml">{{item.designBlockTypeGuid}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </span>
+
+              <!-- <div [innerHTML]="item.renderedHtml | safeHtml"></div> -->
+
+              <!-- Dynamic Structures Memberboss-->
+              <div *ngIf="item.columns">
+                  <div class="wrapper">
+                    <div class="container pt-3">
+                      <div class="row">
+                        <div *ngFor="let column of item.columns; let i = index"  class="col-md-{{column.col}} p-0 innerDropzone" dndDropzone (dndDrop)="onDrop($event, column.addonList)">
+                          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: column.addonList }"></ng-container>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+            </div>
+          </div>
+
+      </ng-template>
+
+      <div class="initialDropzone col-md-12" dndDropzone (dndDrop)="onDrop($event, addonList)">
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: addonList }"></ng-container>
+      </div>
+
+    </div>
+    <!-- End ngx-drag-drop -->
+
+
+  </div>
+
+
+  <!-- TRASH -->
+  <div dndDropzone dndEffectAllowed="move" (dndDrop)="onDrop($event)" class="dndList trashCan"> <i class="fas fa-trash"></i>
+  </div>
+  <!-- End Trash -->
+
+</div>
+<!-- End Tier Page -->
+
+<!-- Side Tool Panel -->
+
+<div class="dragDropToolPanel" [ngClass]="{'showToolPanel': toolPanel.show}">
+  <ng-template #recursiveList2 let-list="nestableList">
+    <div dndPlaceholderRef class="dndPlaceholder"></div>
+    <div *ngFor="let item2 of list"
+            [dndDraggable]="item2"
+            dndEffectAllowed="copy"
+            [dndDisableIf]="item2.disable"
+            (dndStart)="onDragStart($event)"
+            (dndCopied)="onDragged(item2, list, 'copy')"
+            (dndLinked)="onDragged(item2, list, 'link')"
+            (dndMoved)="onDragged(item2, list, 'move')"
+            (dndCanceled)="onDragged(item2, list, 'none')"
+            (dndEnd)="onDragEnd($event)"
+            class="dragPanelItem"
+            >
+              {{item2.name}}
+              <img class="dragImg" src="{{item2.image}}" *ngIf="item2.image">
+              <img class="dragImg" src="https://cdn3.iconfinder.com/data/icons/design-n-code/100/272127c4-8d19-4bd3-bd22-2b75ce94ccb4-512.png" *ngIf="!item2.image">
+
+    </div>
+  </ng-template>
+  <div dndDropzone (dndDrop)="onDrop($event, nestableList)" class="invisbleScroll bg-light text-dark">
+    <ng-container *ngTemplateOutlet="recursiveList2; context:{ nestableList: nestableList  | customFilter}"></ng-container>
+    <ng-container *ngTemplateOutlet="recursiveList2; context:{ nestableList: nestableList  | customFilter2}"></ng-container>
+  </div>
+
+  <div class="toggleBtn">
+    <div (click)="toolPanel.show = !toolPanel.show">
+      <i class="fas fa-chevron-right" *ngIf="!toolPanel.show" ></i>
+      <i class="fas fa-chevron-left" *ngIf="toolPanel.show"></i>
+    </div>
+
+  </div>
+
+</div>

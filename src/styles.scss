@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'sass/colors';
+@import 'sass/mixins';
+@import 'sass/fonts';
+@import 'sass/components';
+@import 'sass/buttons';
+@import 'sass/nav';
+@import 'sass/variables';
+
+
+body {
+  font-family: 'Quicksand'; background-color: $appBackground;
+}
+h2, h3 {
+  color: #444;
+}
+body, input[text], button {
+  color: #888;
+}
+a {
+  cursor: pointer;
+  cursor: hand;
+}
+
+// .tierPage {margin-top:56px;}

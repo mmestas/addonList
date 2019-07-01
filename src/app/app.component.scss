@@ -1,0 +1,64 @@
+div[dnddropzone] {
+  &:hover {
+    // &.innerDropzone {background-color: #00BCD4 !important;}
+  }
+  &.dndDragover {background-color: #775577 !important;}
+  &.innerDropzone {background: #ffffff; border-radius: 5px; border: 1px dotted #a8a8c5; min-height:50px;}
+}
+
+.hoverOverlay {display:none; position: absolute; left:0; top:0; width:100%; height:100%; text-align: center; vertical-align: middle; background-color: #02020238;}
+
+.initialDropzone {background: #ffffff;border-radius: 5px; min-height:50px; padding:1px; position: relative;
+  &:hover {
+    .hoverOverlay {display: flex; flex-direction: column; align-items: center; justify-content: center;}
+  }
+}
+.dragItem {border-radius: 5px; border:0px dashed #d2d2d2; min-height:50px; padding:1px; margin: 0px;}
+.dragPanelItem {border-bottom: 2px solid #888; cursor:move;
+  &:hover {background: #00BCD4;}
+}
+.dragIconHolder {background-color: #555; color: #ffffff; border-top-right-radius: 4px; border-top-left-radius: 4px;
+  i {color: #ffffff; padding:10px; cursor:pointer;
+    &:hover {font-weight: bold; color: #00BCD4;}
+  }
+}
+.wrapper {background-color: transparent; border-radius:4px;}
+
+.dragDropToolPanelHeader {background: #eaeaea; width:250px;}
+  .dragDropToolPanel {position: fixed; display: flex; left:0; top: 100px;  min-height:300px; transition:0.5s;
+    .invisbleScroll {
+      overflow: -moz-scrollbars-none;
+      -ms-overflow-style: none;
+      z-index: 10; max-height: 80vh; overflow-y: scroll; width:1px;
+      transition:0.5s;
+      font-size:12px;
+      border: 2px solid #888;
+      &::-webkit-scrollbar { width: 0 !important }
+    }
+    .toggleBtn {display: flex; flex-direction: column; justify-content: center;
+      > div { background: white; border: 2px solid #888; border-radius: 50px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin-left: -20px; transition: 1s; position: relative;
+        &:hover {width: 100px;}
+        i {font-size: 22px; position: absolute; right:12px;}
+      }
+
+    }
+    &.showToolPanel {display:block; display: flex; margin-left:0;
+       .invisbleScroll {width:85px;}
+       .toggleBtn {
+         > div {
+           &:hover {width: 50px;}
+         }
+       }
+     }
+    .dragItem .dragItem {margin-bottom:7px; border: 2px solid #829a66;  background: #eeeeee;}
+    img.dragImg {width:70px; max-height:70px;}
+  }
+
+
+.trashCan {border: 1px solid #888; background: #f7f7f7; padding: 20px; position: fixed; right: 15px; top: calc(50% - 170px); width: 135px; height: 135px; border-radius: 5px;
+  i {font-size:50px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color:#848e7a; transition:0.2s;-webkit-transition: 0.2s;
+  }
+  &.dndDragover {border-color: #775577;
+    i {font-size: 50px; color:#ffffff;}
+  }
+}
